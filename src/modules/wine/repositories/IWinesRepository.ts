@@ -1,6 +1,7 @@
 import CreateWineDTO from "../dtos/CreateWineDTO";
 import CreateWinePriceDTO from "../dtos/CreateWinePriceDTO";
-import { CreateWinePropertyDTO } from "../dtos/CreateWinePropertyDTO";
+import CreateWinePropertyDTO from "../dtos/CreateWinePropertyDTO";
+import WinePropertyDTO from "../dtos/WinePropertyDTO";
 import Wine from "../infra/typeorm/entities/Wine";
 import WinePrice from "../infra/typeorm/entities/WinePrice";
 import WineProperty from "../infra/typeorm/entities/WineProperty";
@@ -11,4 +12,7 @@ export default interface IWinesRepository {
   createWineProperty(
     createWinePropertyDTO: CreateWinePropertyDTO
   ): Promise<WineProperty[]>;
+  findAllWines(): Promise<Wine[]>;
+  findWinePricesById(wineId: string): Promise<WinePrice[]>;
+  findByProperties(winePropertyDTO: WinePropertyDTO): Promise<Wine>;
 }

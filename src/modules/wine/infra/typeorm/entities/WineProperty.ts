@@ -5,7 +5,7 @@ export default class WineProperty {
     this.name = name;
     this.value = value;
   }
-  id?: number;
+  id?: string;
   wineId: string;
   name: string;
   value: string | number;

@@ -81,4 +81,38 @@ describe("CreateWineService", () => {
       ])
     );
   });
+
+  it("should create a second price if the wine's properties be the same", async () => {
+    const wine1 = {
+      property: {
+        name: "Domaine du Haut Bourg Sauvignon",
+        origin: "Valleé de la Loire",
+        color: "blanc",
+        year: 2022,
+      },
+      price: 5.3,
+      website: "www.hautbourgsauvignon.com",
+    };
+
+    const result = await createWineService.execute(wine1);
+
+    const wine2 = {
+      property: {
+        name: "Domaine du Haut Bourg Sauvignon",
+        origin: "Valleé de la Loire",
+        color: "blanc",
+        year: 2022,
+      },
+      price: 40,
+      website: "www.hautbourgsauvignon.com",
+    };
+
+    await createWineService.execute(wine2);
+
+    const wines = await fakeWineRepository.findAllWines();
+    const prices = await fakeWineRepository.findWinePricesById(result.wine.id);
+
+    expect(wines.length).toBe(1);
+    expect(prices.length).toBe(2);
+  });
 });

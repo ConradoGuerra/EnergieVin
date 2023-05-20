@@ -5,7 +5,10 @@ import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
 
 interface IRequest {
   property: {
-    [key: string]: unknown;
+    name: string;
+    origin: string;
+    color: string;
+    year: number;
   };
   price: number;
   website: string;
@@ -17,8 +20,22 @@ export default class CreateWineService {
   async execute(request: IRequest): Promise<{
     wine: Wine;
     winePrice: WinePrice;
-    wineProperties: WineProperty[];
+    wineProperties?: WineProperty[];
   }> {
+    const hasWine = await this.winesRepository.findByProperties(
+      request.property
+    );
+
+    if (hasWine) {
+      const winePrice = await this.winesRepository.createWinePrice({
+        wineId: hasWine.id,
+        price: request.price,
+        date: hasWine.date,
+      });
+
+      return { wine: hasWine, winePrice };
+    }
+
     const wine = await this.winesRepository.createWine({
       website: request.website,
       date: new Date(),
@@ -29,8 +46,6 @@ export default class CreateWineService {
       price: request.price,
       date: wine.date,
     });
-
-    delete request.price;
 
     const wineProperties = await this.winesRepository.createWineProperty({
       wineId: wine.id,

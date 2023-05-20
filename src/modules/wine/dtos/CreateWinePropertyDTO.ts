@@ -1,4 +1,10 @@
-export interface CreateWinePropertyDTO {
+export default interface CreateWinePropertyDTO {
+  id?: string;
   wineId: string;
-  wineProperty: { [key: string]: unknown };
+  wineProperty: {
+    name: string;
+    origin: string;
+    color: string;
+    year: number;
+  };
 }
