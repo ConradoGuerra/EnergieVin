@@ -1,12 +1,10 @@
 import Wine from "@modules/wine/infra/typeorm/entities/Wine";
+import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
 
 interface IRequest {
   property: {
-    name: string;
-    origin: string;
-    color: string;
-    year: number;
+    [key: string]: unknown;
   };
   price: number;
   website: string;
@@ -15,15 +13,23 @@ interface IRequest {
 export default class CreateWineService {
   constructor(private winesRepository: IWinesRepository) {}
 
-  async execute(request: IRequest): Promise<Wine> {
-    const wineData = {
-      id: "1",
-      name: request.property.name,
-      properties: request.property.color,
-      price: request.price,
+  async execute(
+    request: IRequest
+  ): Promise<{ wine: Wine; wineProperties: WineProperty[] }> {
+    const wine = await this.winesRepository.createWine({
       website: request.website,
       date: new Date(),
+    });
+
+    const winePropertyData = {
+      wineId: wine.id,
+      wineProperty: request.property,
     };
-    return this.winesRepository.create(wineData);
+
+    const wineProperties = await this.winesRepository.createWineProperty(
+      winePropertyData
+    );
+
+    return { wine, wineProperties };
   }
 }

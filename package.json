@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:verbose": "jest --passWithNoTests --runInBand --watchAll"
   },
   "keywords": [],
   "author": "Conrado Guerra",

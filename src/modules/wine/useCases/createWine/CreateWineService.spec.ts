@@ -10,7 +10,14 @@ describe("CreateWineService", () => {
     createWineService = new CreateWineService(fakeWineRepository);
   });
 
-  it("should create a wine succesfully", async () => {
+  it("should create a wine succesfully with its properties", async () => {
+    const mockDate = new Date();
+    const OriginalDate = global.Date;
+    jest.spyOn(global, "Date").mockImplementationOnce(args => {
+      if (args) return new OriginalDate(args);
+      return mockDate;
+    });
+
     const input = {
       property: {
         name: "Domaine du Haut Bourg Sauvignon",
@@ -22,8 +29,23 @@ describe("CreateWineService", () => {
       website: "www.hautbourgsauvignon.com",
     };
 
-    const wine = await createWineService.execute(input);
-
-    expect(wine).toHaveProperty("id");
+    expect(await createWineService.execute(input)).toMatchObject({
+      wine: {
+        date: mockDate,
+        id: "1",
+        website: "www.hautbourgsauvignon.com",
+      },
+      wineProperties: [
+        {
+          id: "1",
+          name: "name",
+          value: "Domaine du Haut Bourg Sauvignon",
+          wineId: "1",
+        },
+        { id: "2", name: "origin", value: "Valleé de la Loire", wineId: "1" },
+        { id: "3", name: "color", value: "blanc", wineId: "1" },
+        { id: "4", name: "year", value: 2022, wineId: "1" },
+      ],
+    });
   });
 });
