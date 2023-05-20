@@ -2,25 +2,31 @@ import FakeWineRepository from "@modules/wine/repositories/fakes/FakeWinesReposi
 import CreateWineService from "./CreateWineService";
 import Wine from "@modules/wine/infra/typeorm/entities/Wine";
 import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 
 describe("CreateWineService", () => {
   let fakeWineRepository: FakeWineRepository;
   let createWineService: CreateWineService;
+  let mockedDate: Date;
+
+  beforeAll(() => {
+    mockedDate = new Date();
+    const OriginalDate = global.Date;
+    jest.spyOn(global, "Date").mockImplementationOnce(args => {
+      if (args) return new OriginalDate(args);
+      return mockedDate;
+    });
+  });
 
   beforeEach(() => {
     fakeWineRepository = new FakeWineRepository();
     createWineService = new CreateWineService(fakeWineRepository);
   });
 
-  it("should create a wine succesfully with its properties", async () => {
-    const mockDate = new Date();
-    const OriginalDate = global.Date;
-    jest.spyOn(global, "Date").mockImplementationOnce(args => {
-      if (args) return new OriginalDate(args);
-      return mockDate;
-    });
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
 
+  it("should create a wine successfully with its price and properties", async () => {
     const input = {
       property: {
         name: "Domaine du Haut Bourg Sauvignon",
@@ -35,7 +41,22 @@ describe("CreateWineService", () => {
     const data = await createWineService.execute(input);
 
     expect(data.wine).toBeInstanceOf(Wine);
+    expect(data.wine).toEqual(
+      expect.objectContaining({
+        id: "1",
+        date: mockedDate,
+        website: "www.hautbourgsauvignon.com",
+      })
+    );
     expect(data.winePrice).toBeInstanceOf(WinePrice);
+    expect(data.winePrice).toEqual(
+      expect.objectContaining({
+        date: mockedDate,
+        id: "1",
+        price: 5.3,
+        wineId: "1",
+      })
+    );
     expect(data.wineProperties).toEqual(
       expect.arrayContaining([
         {
