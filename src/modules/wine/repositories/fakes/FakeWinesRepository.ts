@@ -5,10 +5,9 @@ import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 import CreateWinePropertyDTO from "@modules/wine/dtos/CreateWinePropertyDTO";
 import CreateWinePriceDTO from "@modules/wine/dtos/CreateWinePriceDTO";
 import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import WineDataDTO from "@modules/wine/dtos/WineCompleteDTO";
 import WinePropertyDTO from "@modules/wine/dtos/WinePropertyDTO";
 
-export default class FakeWineRepository implements IWinesRepository {
+export default class FakeWinesRepository implements IWinesRepository {
   private wines: Wine[] = [];
   private wineProperties: WineProperty[] = [];
   private winePrices: WinePrice[] = [];

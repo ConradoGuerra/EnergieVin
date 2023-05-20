@@ -7,6 +7,7 @@
     "test": "jest",
     "test:ci": "jest --passWithNoTests --silent --noStackTrace --runInBand --coverage",
     "test:verbose": "jest --passWithNoTests --runInBand --watchAll",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "migration:create": "node migrations.js create",
     "migration:generate": "node migrations.js generate",
     "migration:run": "node migrations.js run",
@@ -32,6 +33,7 @@
     "express": "^4.18.2",
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0",
     "typeorm": "^0.3.16"
   }
 }
