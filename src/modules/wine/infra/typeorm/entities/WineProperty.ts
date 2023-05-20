@@ -1,12 +1,18 @@
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import Wine from "./Wine";
+
+@Entity("wine_properties")
 export default class WineProperty {
-  constructor({ id, wineId, name, value }) {
-    this.id = id;
-    this.wineId = wineId;
-    this.name = name;
-    this.value = value;
-  }
+  @PrimaryColumn()
   id?: string;
-  wineId: string;
+
+  @ManyToOne(() => Wine, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "wineId" })
+  wineId: Wine;
+
+  @Column()
   name: string;
-  value: string | number;
+
+  @Column()
+  value: string;
 }
