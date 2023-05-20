@@ -28,12 +28,17 @@ export default class FakeWineRepository implements IWinesRepository {
   ): Promise<Array<WineProperty>> {
     Object.keys(createWinePropertyDTO.wineProperty).map(
       (propertyName, index) => {
-        const wineProperty = new WineProperty({
-          id: (index + 1).toString(),
-          wineId: createWinePropertyDTO.wineId,
-          name: propertyName,
-          value: createWinePropertyDTO.wineProperty[propertyName],
-        });
+        const wineProperty = new WineProperty();
+        Object.assign(
+          wineProperty,
+          {},
+          {
+            id: (index + 1).toString(),
+            wineId: createWinePropertyDTO.wineId,
+            name: propertyName,
+            value: createWinePropertyDTO.wineProperty[propertyName],
+          }
+        );
 
         this.wineProperties.push(wineProperty);
       }
@@ -44,7 +49,8 @@ export default class FakeWineRepository implements IWinesRepository {
   async createWinePrice(
     createWinePriceDTO: CreateWinePriceDTO
   ): Promise<WinePrice> {
-    const winePrice = new WinePrice({
+    const winePrice = new WinePrice();
+    Object.assign(winePrice, {
       id: (this.winePrices.length + 1).toString(),
       wineId: createWinePriceDTO.wineId,
       price: createWinePriceDTO.price,
@@ -61,7 +67,7 @@ export default class FakeWineRepository implements IWinesRepository {
   }
 
   async findWinePricesById(wineId: string): Promise<WinePrice[]> {
-    return this.winePrices.filter(price => price.wineId === wineId);
+    return this.winePrices.filter(price => price.wineId.toString() === wineId);
   }
 
   async findByProperties(winePropertyDTO: WinePropertyDTO): Promise<Wine> {
@@ -77,6 +83,6 @@ export default class FakeWineRepository implements IWinesRepository {
       })
       .map(item => item.wineId);
 
-    return this.wines.find(wine => wine.id === wineId);
+    return this.wines.find(wine => wine.id === wineId.toString());
   }
 }
