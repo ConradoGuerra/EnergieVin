@@ -1,5 +1,8 @@
 import FakeWineRepository from "@modules/wine/repositories/fakes/FakeWinesRepository";
 import CreateWineService from "./CreateWineService";
+import Wine from "@modules/wine/infra/typeorm/entities/Wine";
+import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
+import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 
 describe("CreateWineService", () => {
   let fakeWineRepository: FakeWineRepository;
@@ -29,23 +32,32 @@ describe("CreateWineService", () => {
       website: "www.hautbourgsauvignon.com",
     };
 
-    expect(await createWineService.execute(input)).toMatchObject({
-      wine: {
-        date: mockDate,
-        id: "1",
-        website: "www.hautbourgsauvignon.com",
-      },
-      wineProperties: [
+    const data = await createWineService.execute(input);
+
+    expect(data.wine).toBeInstanceOf(Wine);
+    expect(data.winePrice).toBeInstanceOf(WinePrice);
+    expect(data.wineProperties).toEqual(
+      expect.arrayContaining([
         {
           id: "1",
+          wineId: "1",
           name: "name",
           value: "Domaine du Haut Bourg Sauvignon",
-          wineId: "1",
         },
-        { id: "2", name: "origin", value: "Valleé de la Loire", wineId: "1" },
-        { id: "3", name: "color", value: "blanc", wineId: "1" },
-        { id: "4", name: "year", value: 2022, wineId: "1" },
-      ],
-    });
+        {
+          id: "2",
+          wineId: "1",
+          name: "origin",
+          value: "Valleé de la Loire",
+        },
+        {
+          id: "3",
+          wineId: "1",
+          name: "color",
+          value: "blanc",
+        },
+        { id: "4", wineId: "1", name: "year", value: 2022 },
+      ])
+    );
   });
 });

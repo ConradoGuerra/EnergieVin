@@ -1,4 +1,5 @@
 import Wine from "@modules/wine/infra/typeorm/entities/Wine";
+import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
 import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
 
@@ -13,23 +14,29 @@ interface IRequest {
 export default class CreateWineService {
   constructor(private winesRepository: IWinesRepository) {}
 
-  async execute(
-    request: IRequest
-  ): Promise<{ wine: Wine; wineProperties: WineProperty[] }> {
+  async execute(request: IRequest): Promise<{
+    wine: Wine;
+    winePrice: WinePrice;
+    wineProperties: WineProperty[];
+  }> {
     const wine = await this.winesRepository.createWine({
       website: request.website,
       date: new Date(),
     });
 
-    const winePropertyData = {
+    const winePrice = await this.winesRepository.createWinePrice({
+      wineId: wine.id,
+      price: request.price,
+      date: wine.date,
+    });
+
+    delete request.price;
+
+    const wineProperties = await this.winesRepository.createWineProperty({
       wineId: wine.id,
       wineProperty: request.property,
-    };
+    });
 
-    const wineProperties = await this.winesRepository.createWineProperty(
-      winePropertyData
-    );
-
-    return { wine, wineProperties };
+    return { wine, winePrice, wineProperties };
   }
 }

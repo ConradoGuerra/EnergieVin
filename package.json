@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:ci": "jest --passWithNoTests --silent --noStackTrace --runInBand --coverage",
     "test:verbose": "jest --passWithNoTests --runInBand --watchAll"
   },
   "keywords": [],
