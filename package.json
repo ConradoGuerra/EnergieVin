@@ -22,6 +22,8 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13"
+    "pg": "^8.11.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.16"
   }
 }

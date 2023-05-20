@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: energieVin
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./node_modules/sdk-utils-module/scripts/database/postgres-create-tables.sql:/docker-entrypoint-initdb.d/init.sql
