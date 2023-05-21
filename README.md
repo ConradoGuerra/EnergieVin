@@ -2,7 +2,9 @@
 
 `Energie Vin API` is an API made to gather data from external APIs to retrieve wines data, create evaluation of wines and create users.
 
-# Steps for run this project in development (local - It must have nodejs installed)
+## Steps for run this project in development
+
+### (local - It must have nodejs installed)
 
 - node version: 18.16.0
 
@@ -46,7 +48,7 @@ To create a wine the body request must be as it follows:
 }
 ```
 
-### Bulk Create Wine
+### Bulk Create Wines
 
 ##### Request
 
@@ -119,7 +121,7 @@ Get all wines informations without properties and prices
 ]
 ```
 
-### Get Wine Prices
+### Get Wines Prices
 
 Get all prices of a wine, the user can limit the prices history, the price is order by most recent
 
