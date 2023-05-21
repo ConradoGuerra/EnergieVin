@@ -1,18 +1,18 @@
 import FakeWineRepository from "@modules/wine/repositories/fakes/FakeWinesRepository";
-import CreateWineService from "./CreateWineService";
+import BulkCreateWineService from "./BulkCreateWineService";
 import Wine from "@modules/wine/infra/typeorm/entities/Wine";
 import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
 import FakeWineDataApiProvider from "@modules/wine/providers/WineDataApiProvider/fakes/FakeWineDataApiProvider";
 
-describe("CreateWineService", () => {
+describe("BulkCreateWineService", () => {
   let fakeWineRepository: FakeWineRepository;
-  let createWineService: CreateWineService;
+  let bulkCreateWineService: BulkCreateWineService;
   let fakeWineDataApiProvider: FakeWineDataApiProvider;
 
   beforeEach(() => {
     fakeWineRepository = new FakeWineRepository();
     fakeWineDataApiProvider = new FakeWineDataApiProvider();
-    createWineService = new CreateWineService(
+    bulkCreateWineService = new BulkCreateWineService(
       fakeWineRepository,
       fakeWineDataApiProvider
     );
@@ -37,7 +37,7 @@ describe("CreateWineService", () => {
         ];
       });
 
-    const [data] = await createWineService.execute();
+    const [data] = await bulkCreateWineService.execute();
 
     expect(data.wineCreated).toBeInstanceOf(Wine);
     expect(data.wineCreated).toEqual(
@@ -106,7 +106,7 @@ describe("CreateWineService", () => {
       .spyOn(fakeWineDataApiProvider, "getWinesData")
       .mockImplementationOnce(async () => winesData);
 
-    const [result] = await createWineService.execute();
+    const [result] = await bulkCreateWineService.execute();
 
     const wines = await fakeWineRepository.findAllWines();
     const prices = await fakeWineRepository.findWinePricesById(
@@ -146,7 +146,7 @@ describe("CreateWineService", () => {
       .spyOn(fakeWineDataApiProvider, "getWinesData")
       .mockImplementationOnce(async () => winesData);
 
-    const [result] = await createWineService.execute();
+    const [result] = await bulkCreateWineService.execute();
 
     const wines = await fakeWineRepository.findAllWines();
     const prices = await fakeWineRepository.findWinePricesById(

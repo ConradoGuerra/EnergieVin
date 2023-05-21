@@ -2,6 +2,7 @@ import Wine from "@modules/wine/infra/typeorm/entities/Wine";
 import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
 import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
+import { injectable } from "tsyringe";
 
 interface IRequest {
   name: string;
@@ -14,7 +15,7 @@ interface IRequest {
   website: string;
   date: Date;
 }
-
+@injectable()
 export default class CreateWineService {
   constructor(private winesRepository: IWinesRepository) {}
 

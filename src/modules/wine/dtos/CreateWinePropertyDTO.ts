@@ -1,6 +1,6 @@
 export default interface CreateWinePropertyDTO {
-  id?: string;
-  wineId: string;
+  id?: number;
+  wineId: number;
   wineProperty: {
     origin: string;
     color: string;

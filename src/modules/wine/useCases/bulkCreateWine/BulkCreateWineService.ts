@@ -1,10 +1,11 @@
 import { IWineDataApiProvider } from "@modules/wine/providers/WineDataApiProvider/models/IWineDataApiProvider";
 import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
-export default class CreateWineService {
+@injectable()
+export default class BulkCreateWineService {
   constructor(
-    @inject("winesRepository")
+    @inject("WinesRepository")
     private winesRepository: IWinesRepository,
     @inject("WineDataApiProvider")
     private wineDataApiProvider: IWineDataApiProvider

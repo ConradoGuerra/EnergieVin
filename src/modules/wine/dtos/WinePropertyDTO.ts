@@ -1,5 +1,5 @@
 export default interface WinePropertyDTO {
-  wineId?: string;
+  wineId?: number;
   name: string;
   origin: string;
   color: string;

@@ -10,11 +10,11 @@ export default class WineDataApiProvider implements IWineDataApiProvider {
     try {
       const { wineDataRequestConfig } = WineDataRequestConfig;
 
-      const { data: componentScoresReport } = await this.httpClient.get(
+      const componentScoresReport = await this.httpClient.get(
         wineDataRequestConfig.url()
       );
 
-      return componentScoresReport.analysis;
+      return componentScoresReport.data;
     } catch (error) {
       console.log(error);
     }

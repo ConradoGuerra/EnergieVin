@@ -7,13 +7,11 @@ import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
 import CreateWineDTO from "@modules/wine/dtos/CreateWineDTO";
 import CreateWinePropertyDTO from "@modules/wine/dtos/CreateWinePropertyDTO";
 import CreateWinePriceDTO from "@modules/wine/dtos/CreateWinePriceDTO";
-import WinePropertyDTO from "@modules/wine/dtos/WinePropertyDTO";
 
 export default class WinesRepository implements IWinesRepository {
   private wineRepository: Repository<Wine>;
   private winePriceRepository: Repository<WinePrice>;
   private winePropertyRepository: Repository<WineProperty>;
-  private wineId: unknown;
 
   constructor() {
     this.wineRepository = AppDataSource.getRepository(Wine);
@@ -24,7 +22,6 @@ export default class WinesRepository implements IWinesRepository {
   async createWine(wineDTO: CreateWineDTO): Promise<Wine> {
     const wine = this.wineRepository.create(wineDTO);
     await this.wineRepository.save(wine);
-    this.wineId = wine.id;
     return wine;
   }
 
@@ -36,7 +33,7 @@ export default class WinesRepository implements IWinesRepository {
         return this.winePropertyRepository.create({
           value: createWinePropertyDTO.wineProperty[propertyName],
           name: propertyName,
-          wineId: this.wineId,
+          wineId: createWinePropertyDTO.wineId,
         });
       }
     );
@@ -51,10 +48,9 @@ export default class WinesRepository implements IWinesRepository {
   async createWinePrice(
     createWinePriceDTO: CreateWinePriceDTO
   ): Promise<WinePrice> {
-    this.wineId = createWinePriceDTO.wineId;
     const winePrice = this.winePriceRepository.create({
       ...createWinePriceDTO,
-      wineId: this.wineId,
+      wineId: createWinePriceDTO.wineId,
     });
     await this.winePriceRepository.save(winePrice);
     return winePrice;
@@ -64,9 +60,9 @@ export default class WinesRepository implements IWinesRepository {
     return this.wineRepository.find();
   }
 
-  async findWinePricesById(wineId: string): Promise<WinePrice[]> {
+  async findWinePricesById(wineId: number): Promise<WinePrice[]> {
     return this.winePriceRepository.find({
-      where: { wineId: wineId } as FindOptionsWhere<unknown>,
+      where: { wineId: wineId },
     });
   }
 
