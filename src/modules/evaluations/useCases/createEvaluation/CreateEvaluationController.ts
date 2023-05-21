@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import CreateEvaluationService from "./CreateEvaluationService";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import CreateEvaluationService from './CreateEvaluationService';
 
 export default class CreateEvaluationController {
   async handle(request: Request, response: Response): Promise<Response> {

@@ -1,1 +1,1 @@
-import "./WineDataApiProvider";
+import './WineDataApiProvider';

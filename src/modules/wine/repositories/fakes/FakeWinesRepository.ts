@@ -1,13 +1,20 @@
-import CreateWineDTO from "@modules/wine/dtos/CreateWineDTO";
-import Wine from "@modules/wine/infra/typeorm/entities/Wine";
-import IWinesRepository from "../IWinesRepository";
-import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
-import CreateWinePropertyDTO from "@modules/wine/dtos/CreateWinePropertyDTO";
-import CreateWinePriceDTO from "@modules/wine/dtos/CreateWinePriceDTO";
-import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import WinePropertyDTO from "@modules/wine/dtos/WinePropertyDTO";
+import CreateWineDTO from '@modules/wine/dtos/CreateWineDTO';
+import Wine from '@modules/wine/infra/typeorm/entities/Wine';
+import IWinesRepository from '../IWinesRepository';
+import WineProperty from '@modules/wine/infra/typeorm/entities/WineProperty';
+import CreateWinePropertyDTO from '@modules/wine/dtos/CreateWinePropertyDTO';
+import CreateWinePriceDTO from '@modules/wine/dtos/CreateWinePriceDTO';
+import WinePrice from '@modules/wine/infra/typeorm/entities/WinePrice';
 
 export default class FakeWinesRepository implements IWinesRepository {
+  findLastPrices(
+    firstPrice: number,
+    lastPrice: number,
+  ): Promise<
+    { wines_id: number; wines_name: string; wines_website: string; wines_date: string; wineId: number; max: string }[]
+  > {
+    throw new Error('Method not implemented.');
+  }
   private wines: Wine[] = [];
   private wineProperties: WineProperty[] = [];
   private winePrices: WinePrice[] = [];
@@ -22,32 +29,26 @@ export default class FakeWinesRepository implements IWinesRepository {
     return wine;
   }
 
-  async createWineProperty(
-    createWinePropertyDTO: CreateWinePropertyDTO
-  ): Promise<Array<WineProperty>> {
-    Object.keys(createWinePropertyDTO.wineProperty).map(
-      (propertyName, index) => {
-        const wineProperty = new WineProperty();
-        Object.assign(
-          wineProperty,
-          {},
-          {
-            id: (index + 1).toString(),
-            wineId: createWinePropertyDTO.wineId,
-            name: propertyName,
-            value: createWinePropertyDTO.wineProperty[propertyName],
-          }
-        );
+  async createWineProperty(createWinePropertyDTO: CreateWinePropertyDTO): Promise<Array<WineProperty>> {
+    Object.keys(createWinePropertyDTO.wineProperty).map((propertyName, index) => {
+      const wineProperty = new WineProperty();
+      Object.assign(
+        wineProperty,
+        {},
+        {
+          id: (index + 1).toString(),
+          wineId: createWinePropertyDTO.wineId,
+          name: propertyName,
+          value: createWinePropertyDTO.wineProperty[propertyName],
+        },
+      );
 
-        this.wineProperties.push(wineProperty);
-      }
-    );
+      this.wineProperties.push(wineProperty);
+    });
     return this.wineProperties;
   }
 
-  async createWinePrice(
-    createWinePriceDTO: CreateWinePriceDTO
-  ): Promise<WinePrice> {
+  async createWinePrice(createWinePriceDTO: CreateWinePriceDTO): Promise<WinePrice> {
     const winePrice = new WinePrice();
     Object.assign(winePrice, {
       id: (this.winePrices.length + 1).toString(),
@@ -85,6 +86,6 @@ export default class FakeWinesRepository implements IWinesRepository {
       wineProperty_wineId: number;
     }[]
   > {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }

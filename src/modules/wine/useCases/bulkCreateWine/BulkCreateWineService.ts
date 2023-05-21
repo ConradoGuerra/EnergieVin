@@ -1,27 +1,27 @@
-import { IWineDataApiProvider } from "@modules/wine/providers/WineDataApiProvider/models/IWineDataApiProvider";
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject, injectable } from "tsyringe";
+import { IWineDataApiProvider } from '@modules/wine/providers/WineDataApiProvider/models/IWineDataApiProvider';
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export default class BulkCreateWineService {
   constructor(
-    @inject("WinesRepository")
+    @inject('WinesRepository')
     private winesRepository: IWinesRepository,
-    @inject("WineDataApiProvider")
-    private wineDataApiProvider: IWineDataApiProvider
+    @inject('WineDataApiProvider')
+    private wineDataApiProvider: IWineDataApiProvider,
   ) {}
 
   async execute(): Promise<any> {
     const wineData = await this.wineDataApiProvider.getWinesData();
     const wines = [];
-    for await (let wine of wineData) {
+    for await (const wine of wineData) {
       const [hasWine] = await this.winesRepository.findByName(wine.name);
 
       if (hasWine) {
         const winePrice = await this.winesRepository.createWinePrice({
           wineId: hasWine.id,
           price: wine.price,
-          date: wine.date,
+          date: wine.date || new Date(),
         });
 
         wines.push({ wine: hasWine, winePrice });
@@ -31,7 +31,7 @@ export default class BulkCreateWineService {
       const wineCreated = await this.winesRepository.createWine({
         name: wine.name,
         website: wine.website,
-        date: wine.date,
+        date: wine.date || new Date(),
       });
 
       const winePrice = await this.winesRepository.createWinePrice({

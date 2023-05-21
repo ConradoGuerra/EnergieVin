@@ -1,6 +1,6 @@
-import User from "@modules/user/infra/typeorm/entities/User";
-import IUsersRepository from "@modules/user/repositories/IUsersRepository";
-import { inject, injectable } from "tsyringe";
+import User from '@modules/user/infra/typeorm/entities/User';
+import IUsersRepository from '@modules/user/repositories/IUsersRepository';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   id?: number;
@@ -12,7 +12,7 @@ interface IRequest {
 @injectable()
 export default class CreateUserService {
   constructor(
-    @inject("UsersRepository")
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository
   ) {}
 

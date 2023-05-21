@@ -1,8 +1,8 @@
-import Wine from "@modules/wine/infra/typeorm/entities/Wine";
-import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject, injectable } from "tsyringe";
+import Wine from '@modules/wine/infra/typeorm/entities/Wine';
+import WinePrice from '@modules/wine/infra/typeorm/entities/WinePrice';
+import WineProperty from '@modules/wine/infra/typeorm/entities/WineProperty';
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   name: string;
@@ -18,7 +18,7 @@ interface IRequest {
 @injectable()
 export default class CreateWineService {
   constructor(
-    @inject("WinesRepository")
+    @inject('WinesRepository')
     private winesRepository: IWinesRepository
   ) {}
 
@@ -33,7 +33,7 @@ export default class CreateWineService {
       const winePrice = await this.winesRepository.createWinePrice({
         wineId: hasWine.id,
         price: request.price,
-        date: hasWine.date,
+        date: request.date || new Date(),
       });
 
       return { wine: hasWine, winePrice };
@@ -42,7 +42,7 @@ export default class CreateWineService {
     const wine = await this.winesRepository.createWine({
       name: request.name,
       website: request.website,
-      date: request.date,
+      date: request.date || new Date(),
     });
 
     const winePrice = await this.winesRepository.createWinePrice({
