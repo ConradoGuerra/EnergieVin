@@ -2,6 +2,8 @@
 
 `Energie Vin API` is an API made to gather data from external APIs to retrieve wines data, create evaluation of wines and create users.
 
+Access to diagram: https://drive.google.com/file/d/123J4krTPCIIdB5sc_Qj2BOp7zi0PrszQ/view?usp=sharing
+
 ## Steps for run this project in development
 
 ### (local - It must have nodejs installed)
