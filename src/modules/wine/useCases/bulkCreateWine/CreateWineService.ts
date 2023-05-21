@@ -1,57 +1,50 @@
-import Wine from "@modules/wine/infra/typeorm/entities/Wine";
-import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
+import { IWineDataApiProvider } from "@modules/wine/providers/WineDataApiProvider/models/IWineDataApiProvider";
 import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-
-interface IRequest {
-  name: string;
-  property: {
-    origin: string;
-    color: string;
-    year: number;
-  };
-  price: number;
-  website: string;
-  date: Date;
-}
+import { inject } from "tsyringe";
 
 export default class CreateWineService {
-  constructor(private winesRepository: IWinesRepository) {}
+  constructor(
+    @inject("winesRepository")
+    private winesRepository: IWinesRepository,
+    @inject("WineDataApiProvider")
+    private wineDataApiProvider: IWineDataApiProvider
+  ) {}
 
-  async execute(request: IRequest[]): Promise<any> {
+  async execute(): Promise<any> {
+    const wineData = await this.wineDataApiProvider.getWinesData();
     const wines = [];
-    for await (let wineData of request) {
-      const [hasWine] = await this.winesRepository.findByName(wineData.name);
+    for await (let wine of wineData) {
+      const [hasWine] = await this.winesRepository.findByName(wine.name);
 
       if (hasWine) {
         const winePrice = await this.winesRepository.createWinePrice({
           wineId: hasWine.id,
-          price: wineData.price,
-          date: wineData.date,
+          price: wine.price,
+          date: wine.date,
         });
 
         wines.push({ wine: hasWine, winePrice });
         continue;
       }
 
-      const wine = await this.winesRepository.createWine({
-        name: wineData.name,
-        website: wineData.website,
-        date: wineData.date,
+      const wineCreated = await this.winesRepository.createWine({
+        name: wine.name,
+        website: wine.website,
+        date: wine.date,
       });
 
       const winePrice = await this.winesRepository.createWinePrice({
-        wineId: wine.id,
-        price: wineData.price,
-        date: wineData.date,
+        wineId: wineCreated.id,
+        price: wine.price,
+        date: wine.date,
       });
 
       const wineProperties = await this.winesRepository.createWineProperty({
-        wineId: wine.id,
-        wineProperty: wineData.property,
+        wineId: wineCreated.id,
+        wineProperty: wine.property,
       });
 
-      wines.push({ wine, winePrice, wineProperties });
+      wines.push({ wineCreated, winePrice, wineProperties });
     }
     return wines;
   }

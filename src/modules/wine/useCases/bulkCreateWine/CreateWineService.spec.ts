@@ -2,35 +2,45 @@ import FakeWineRepository from "@modules/wine/repositories/fakes/FakeWinesReposi
 import CreateWineService from "./CreateWineService";
 import Wine from "@modules/wine/infra/typeorm/entities/Wine";
 import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
+import FakeWineDataApiProvider from "@modules/wine/providers/WineDataApiProvider/fakes/FakeWineDataApiProvider";
 
 describe("CreateWineService", () => {
   let fakeWineRepository: FakeWineRepository;
   let createWineService: CreateWineService;
+  let fakeWineDataApiProvider: FakeWineDataApiProvider;
 
   beforeEach(() => {
     fakeWineRepository = new FakeWineRepository();
-    createWineService = new CreateWineService(fakeWineRepository);
+    fakeWineDataApiProvider = new FakeWineDataApiProvider();
+    createWineService = new CreateWineService(
+      fakeWineRepository,
+      fakeWineDataApiProvider
+    );
   });
 
   it("should create a wine successfully with its price and properties", async () => {
-    const input = [
-      {
-        property: {
-          origin: "Valleé de la Loire",
-          color: "blanc",
-          year: 2022,
-        },
-        name: "Domaine du Haut Bourg Sauvignon",
-        price: 5.3,
-        website: "www.hautbourgsauvignon.com",
-        date: new Date("2023-05-21 10:00:00"),
-      },
-    ];
+    jest
+      .spyOn(fakeWineDataApiProvider, "getWinesData")
+      .mockImplementationOnce(async () => {
+        return [
+          {
+            property: {
+              origin: "Valleé de la Loire",
+              color: "blanc",
+              year: 2022,
+            },
+            name: "Domaine du Haut Bourg Sauvignon",
+            price: 5.3,
+            website: "www.hautbourgsauvignon.com",
+            date: new Date("2023-05-21 10:00:00"),
+          },
+        ];
+      });
 
-    const [data] = await createWineService.execute(input);
+    const [data] = await createWineService.execute();
 
-    expect(data.wine).toBeInstanceOf(Wine);
-    expect(data.wine).toEqual(
+    expect(data.wineCreated).toBeInstanceOf(Wine);
+    expect(data.wineCreated).toEqual(
       expect.objectContaining({
         id: "1",
         name: "Domaine du Haut Bourg Sauvignon",
@@ -67,7 +77,7 @@ describe("CreateWineService", () => {
   });
 
   it("should create a second price if the wine's name be the same", async () => {
-    const wine1 = [
+    const winesData = [
       {
         property: {
           origin: "Valleé de la Loire",
@@ -92,17 +102,23 @@ describe("CreateWineService", () => {
       },
     ];
 
-    const [result] = await createWineService.execute(wine1);
+    jest
+      .spyOn(fakeWineDataApiProvider, "getWinesData")
+      .mockImplementationOnce(async () => winesData);
+
+    const [result] = await createWineService.execute();
 
     const wines = await fakeWineRepository.findAllWines();
-    const prices = await fakeWineRepository.findWinePricesById(result.wine.id);
+    const prices = await fakeWineRepository.findWinePricesById(
+      result.wineCreated.id
+    );
 
     expect(wines.length).toBe(1);
     expect(prices.length).toBe(2);
   });
 
   it("should create a second wine if the wine's name it is not the same", async () => {
-    const wine1 = [
+    const winesData = [
       {
         property: {
           origin: "Valleé de la Loire",
@@ -126,11 +142,16 @@ describe("CreateWineService", () => {
         date: new Date("2023-05-22"),
       },
     ];
+    jest
+      .spyOn(fakeWineDataApiProvider, "getWinesData")
+      .mockImplementationOnce(async () => winesData);
 
-    const [result] = await createWineService.execute(wine1);
+    const [result] = await createWineService.execute();
 
     const wines = await fakeWineRepository.findAllWines();
-    const prices = await fakeWineRepository.findWinePricesById(result.wine.id);
+    const prices = await fakeWineRepository.findWinePricesById(
+      result.wineCreated.id
+    );
 
     expect(wines.length).toBe(2);
     expect(prices.length).toBe(1);

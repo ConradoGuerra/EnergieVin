@@ -1,8 +1,8 @@
 import { container } from "tsyringe";
 import { IWineDataApiProvider } from "./models/IWineDataApiProvider";
-import AtlasIntegrationApiProvider from "./implementations/AtlasIntegrationApiProvider";
+import WineDataApiProvider from "./implementations/WineDataApiProvider";
 
 container.registerSingleton<IWineDataApiProvider>(
-  "AtlasIntegrationApiProvider",
-  AtlasIntegrationApiProvider
+  "WineDataApiProvider",
+  WineDataApiProvider
 );
