@@ -1,12 +1,12 @@
-import { Repository } from "typeorm";
-import { AppDataSource } from "@shared/infra/typeorm";
-import Wine from "../entities/Wine";
-import WinePrice from "../entities/WinePrice";
-import WineProperty from "../entities/WineProperty";
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import CreateWineDTO from "@modules/wine/dtos/CreateWineDTO";
-import CreateWinePropertyDTO from "@modules/wine/dtos/CreateWinePropertyDTO";
-import CreateWinePriceDTO from "@modules/wine/dtos/CreateWinePriceDTO";
+import { Repository } from 'typeorm';
+import { AppDataSource } from '@shared/infra/typeorm';
+import Wine from '../entities/Wine';
+import WinePrice from '../entities/WinePrice';
+import WineProperty from '../entities/WineProperty';
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import CreateWineDTO from '@modules/wine/dtos/CreateWineDTO';
+import CreateWinePropertyDTO from '@modules/wine/dtos/CreateWinePropertyDTO';
+import CreateWinePriceDTO from '@modules/wine/dtos/CreateWinePriceDTO';
 
 export default class WinesRepository implements IWinesRepository {
   private wineRepository: Repository<Wine>;
@@ -73,11 +73,11 @@ export default class WinesRepository implements IWinesRepository {
     }>
   > {
     return this.wineRepository
-      .createQueryBuilder("wine")
+      .createQueryBuilder('wine')
       .leftJoinAndSelect(
-        "wine_properties",
-        "wineProperty",
-        "wineProperty.wineId = wine.id"
+        'wine_properties',
+        'wineProperty',
+        'wineProperty.wineId = wine.id'
       )
       .where(`wine.Id = ${wineId}`)
       .getRawMany();
@@ -85,9 +85,9 @@ export default class WinesRepository implements IWinesRepository {
 
   async findWinePricesById(id: number, limit = 0): Promise<WinePrice[]> {
     return this.winePriceRepository
-      .createQueryBuilder("winePrices")
+      .createQueryBuilder('winePrices')
       .where(`winePrices.wineId = ${id}`)
-      .orderBy("winePrices.date", "DESC")
+      .orderBy('winePrices.date', 'DESC')
       .limit(limit)
       .getMany();
   }
@@ -110,13 +110,13 @@ export default class WinesRepository implements IWinesRepository {
     }[]
   > {
     return this.winePriceRepository
-      .createQueryBuilder("wp")
-      .select("wp.wineId, max(wp.price)")
-      .innerJoinAndSelect("wines", "wines", "wines.id = wp.wineId")
-      .groupBy("wp.wineId, wines.id")
-      .orderBy("max", "DESC")
-      .where(lastPrice ? `wp.price <= ${lastPrice}` : "")
-      .andWhere(firstPrice ? `wp.price >= ${firstPrice}` : `wp.price >= 0`)
+      .createQueryBuilder('wp')
+      .select('wp.wineId, max(wp.price)')
+      .innerJoinAndSelect('wines', 'wines', 'wines.id = wp.wineId')
+      .groupBy('wp.wineId, wines.id')
+      .orderBy('max', 'DESC')
+      .where(lastPrice ? `wp.price <= ${lastPrice}` : '')
+      .andWhere(firstPrice ? `wp.price >= ${firstPrice}` : 'wp.price >= 0')
       .getRawMany();
   }
 }

@@ -1,24 +1,18 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import Wine from "./Wine";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import Wine from './Wine';
 
-@Entity("wine_prices")
+@Entity('wine_prices')
 export default class WinePrice {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id?: number;
 
-  @ManyToOne(() => Wine, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "wineId" })
+  @ManyToOne(() => Wine, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'wineId' })
   wineId: number;
 
-  @Column({ name: "price", type: "decimal" })
-  price: any;
+  @Column({ name: 'price', type: 'decimal' })
+  price: number;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   date: Date;
 }

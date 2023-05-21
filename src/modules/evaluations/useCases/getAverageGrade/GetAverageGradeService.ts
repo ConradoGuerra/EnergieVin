@@ -1,13 +1,13 @@
-import IEvaluationsRepository from "@modules/evaluations/repositories/IEvaluationsRepository";
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject, injectable } from "tsyringe";
+import IEvaluationsRepository from '@modules/evaluations/repositories/IEvaluationsRepository';
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export default class GetAverageGradeService {
   constructor(
-    @inject("EvaluationsRepository")
+    @inject('EvaluationsRepository')
     private evaluationsRepository: IEvaluationsRepository,
-    @inject("WinesRepository")
+    @inject('WinesRepository')
     private winesRepository: IWinesRepository
   ) {}
 

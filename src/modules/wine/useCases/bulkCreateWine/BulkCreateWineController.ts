@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import BulkCreateWineService from "./BulkCreateWineService";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import BulkCreateWineService from './BulkCreateWineService';
 
 export default class BulkCreateWinesController {
   async handle(_request: Request, response: Response): Promise<Response> {

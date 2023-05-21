@@ -1,29 +1,23 @@
-import User from "@modules/user/infra/typeorm/entities/User";
-import Wine from "@modules/wine/infra/typeorm/entities/Wine";
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import User from '@modules/user/infra/typeorm/entities/User';
+import Wine from '@modules/wine/infra/typeorm/entities/Wine';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("evaluations")
+@Entity('evaluations')
 export default class Evaluation {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => User, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "userId" })
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
   userId: number;
 
-  @ManyToOne(() => Wine, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "wineId" })
+  @ManyToOne(() => Wine, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'wineId' })
   wineId: number;
 
   @Column()
   grade: number;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   date: Date;
 }

@@ -1,11 +1,11 @@
-import CreateWineDTO from "@modules/wine/dtos/CreateWineDTO";
-import Wine from "@modules/wine/infra/typeorm/entities/Wine";
-import IWinesRepository from "../IWinesRepository";
-import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
-import CreateWinePropertyDTO from "@modules/wine/dtos/CreateWinePropertyDTO";
-import CreateWinePriceDTO from "@modules/wine/dtos/CreateWinePriceDTO";
-import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import WinePropertyDTO from "@modules/wine/dtos/WinePropertyDTO";
+import CreateWineDTO from '@modules/wine/dtos/CreateWineDTO';
+import Wine from '@modules/wine/infra/typeorm/entities/Wine';
+import IWinesRepository from '../IWinesRepository';
+import WineProperty from '@modules/wine/infra/typeorm/entities/WineProperty';
+import CreateWinePropertyDTO from '@modules/wine/dtos/CreateWinePropertyDTO';
+import CreateWinePriceDTO from '@modules/wine/dtos/CreateWinePriceDTO';
+import WinePrice from '@modules/wine/infra/typeorm/entities/WinePrice';
+import WinePropertyDTO from '@modules/wine/dtos/WinePropertyDTO';
 
 export default class FakeWinesRepository implements IWinesRepository {
   private wines: Wine[] = [];
@@ -85,6 +85,6 @@ export default class FakeWinesRepository implements IWinesRepository {
       wineProperty_wineId: number;
     }[]
   > {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }

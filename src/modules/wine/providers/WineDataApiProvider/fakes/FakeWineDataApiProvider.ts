@@ -1,5 +1,5 @@
-import { IWineDataDTO } from "../dtos/IWineDataDTO";
-import { IWineDataApiProvider } from "../models/IWineDataApiProvider";
+import { IWineDataDTO } from '../dtos/IWineDataDTO';
+import { IWineDataApiProvider } from '../models/IWineDataApiProvider';
 
 export default class FakeWineDataApiProvider implements IWineDataApiProvider {
   private wineData: Array<IWineDataDTO> = [];

@@ -1,20 +1,20 @@
-import { IWineDataApiProvider } from "@modules/wine/providers/WineDataApiProvider/models/IWineDataApiProvider";
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject, injectable } from "tsyringe";
+import { IWineDataApiProvider } from '@modules/wine/providers/WineDataApiProvider/models/IWineDataApiProvider';
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export default class BulkCreateWineService {
   constructor(
-    @inject("WinesRepository")
+    @inject('WinesRepository')
     private winesRepository: IWinesRepository,
-    @inject("WineDataApiProvider")
-    private wineDataApiProvider: IWineDataApiProvider
+    @inject('WineDataApiProvider')
+    private wineDataApiProvider: IWineDataApiProvider,
   ) {}
 
   async execute(): Promise<any> {
     const wineData = await this.wineDataApiProvider.getWinesData();
     const wines = [];
-    for await (let wine of wineData) {
+    for await (const wine of wineData) {
       const [hasWine] = await this.winesRepository.findByName(wine.name);
 
       if (hasWine) {

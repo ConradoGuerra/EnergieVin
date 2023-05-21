@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("users")
+@Entity('users')
 export default class User {
-  @PrimaryGeneratedColumn("increment")
-  id: number;
+  @PrimaryGeneratedColumn('increment')
+    id: number;
 
   @Column()
-  name: string;
+    name: string;
 
   @Column()
-  specialist: boolean;
+    specialist: boolean;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-  createdAt: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
 }

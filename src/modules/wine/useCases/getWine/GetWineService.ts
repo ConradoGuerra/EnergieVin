@@ -1,10 +1,10 @@
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject, injectable } from "tsyringe";
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export default class GetWineService {
   constructor(
-    @inject("WinesRepository")
+    @inject('WinesRepository')
     private winesRepository: IWinesRepository
   ) {}
 
@@ -29,7 +29,7 @@ export default class GetWineService {
           },
         };
       },
-      { wineId, name: "", webSite: "", date: new Date(), properties: {} }
+      { wineId, name: '', webSite: '', date: new Date(), properties: {} }
     );
   }
 }

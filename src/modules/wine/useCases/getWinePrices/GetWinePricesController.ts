@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { container } from "tsyringe";
-import GetWinePricesService from "./GetWinePricesService";
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import GetWinePricesService from './GetWinePricesService';
 
 export default class GetWinePricesController {
   async handle(request: Request, response: Response): Promise<Response> {

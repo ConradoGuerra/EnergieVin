@@ -1,20 +1,13 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import Wine from "./Wine";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import Wine from './Wine';
 
-@Entity("wine_properties")
+@Entity('wine_properties')
 export default class WineProperty {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id?: number;
 
-  @ManyToOne(() => Wine, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "wineId" })
+  @ManyToOne(() => Wine, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'wineId' })
   wineId: number;
 
   @Column()

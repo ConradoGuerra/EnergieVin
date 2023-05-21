@@ -1,5 +1,5 @@
-import CreateEvaluationDTO from "../dtos/CreateEvaluationDTO";
-import Evaluation from "../infra/typeorm/entities/Evaluation";
+import CreateEvaluationDTO from '../dtos/CreateEvaluationDTO';
+import Evaluation from '../infra/typeorm/entities/Evaluation';
 
 export default interface IEvaluationsRepository {
   createEvaluation(

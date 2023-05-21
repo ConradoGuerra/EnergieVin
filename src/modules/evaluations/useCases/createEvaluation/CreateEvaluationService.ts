@@ -1,7 +1,7 @@
-import Evaluation from "@modules/evaluations/infra/typeorm/entities/Evaluation";
-import IEvaluationsRepository from "@modules/evaluations/repositories/IEvaluationsRepository";
-import IUsersRepository from "@modules/user/repositories/IUsersRepository";
-import { inject, injectable } from "tsyringe";
+import Evaluation from '@modules/evaluations/infra/typeorm/entities/Evaluation';
+import IEvaluationsRepository from '@modules/evaluations/repositories/IEvaluationsRepository';
+import IUsersRepository from '@modules/user/repositories/IUsersRepository';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   id?: number;
@@ -14,10 +14,10 @@ interface IRequest {
 @injectable()
 export default class CreateEvaluationService {
   constructor(
-    @inject("EvaluationsRepository")
+    @inject('EvaluationsRepository')
     private evaluationsRepository: IEvaluationsRepository,
 
-    @inject("UsersRepository")
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository
   ) {}
 
@@ -27,6 +27,6 @@ export default class CreateEvaluationService {
       return this.evaluationsRepository.createEvaluation(request);
     }
 
-    return "This user is not a specialist.";
+    return 'This user is not a specialist.';
   }
 }

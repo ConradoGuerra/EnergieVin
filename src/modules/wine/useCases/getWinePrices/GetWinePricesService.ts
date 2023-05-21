@@ -1,12 +1,11 @@
-import Wine from "@modules/wine/infra/typeorm/entities/Wine";
-import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
-import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
-import { inject, injectable } from "tsyringe";
+import WinePrice from '@modules/wine/infra/typeorm/entities/WinePrice';
+import IWinesRepository from '@modules/wine/repositories/IWinesRepository';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export default class GetWinePricesService {
   constructor(
-    @inject("WinesRepository")
+    @inject('WinesRepository')
     private winesRepository: IWinesRepository
   ) {}
 
@@ -42,7 +41,7 @@ export default class GetWinePricesService {
             },
           };
         },
-        { wineId, name: "", webSite: "", date: new Date(), properties: {} }
+        { wineId, name: '', webSite: '', date: new Date(), properties: {} }
       );
       return { wine: wineReduced, prices };
     } catch (error) {
