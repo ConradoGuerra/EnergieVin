@@ -38,7 +38,7 @@ export default class CreateWineService {
     const wine = await this.winesRepository.createWine({
       name: request.name,
       website: request.website,
-      date: new Date(),
+      date: request.date,
     });
 
     const winePrice = await this.winesRepository.createWinePrice({
