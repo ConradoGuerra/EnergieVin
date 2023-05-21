@@ -2,8 +2,8 @@ import BulkCreateWinesController from "@modules/wine/useCases/bulkCreateWine/Bul
 import GetWineController from "@modules/wine/useCases/getWine/GetWineController";
 import GetWinePricesController from "@modules/wine/useCases/getWinePrices/GetWinePricesController";
 import GetWinesController from "@modules/wine/useCases/getWines/GetWinesController";
-
 import { Router } from "express";
+
 const bulkCreateWinesController = new BulkCreateWinesController();
 const getWinePricesController = new GetWinePricesController();
 const getWinesController = new GetWinesController();

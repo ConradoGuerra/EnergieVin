@@ -1,3 +1,4 @@
+import Evaluation from "@modules/evaluations/infra/typeorm/entities/Evaluation";
 import User from "@modules/user/infra/typeorm/entities/User";
 import Wine from "@modules/wine/infra/typeorm/entities/Wine";
 import WinePrice from "@modules/wine/infra/typeorm/entities/WinePrice";
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   username: "admin",
   password: "admin",
   database: "energieVin",
-  entities: [Wine, WinePrice, WineProperty, User],
+  entities: [Wine, WinePrice, WineProperty, User, Evaluation],
   migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
   synchronize: true,
   logging: true,
