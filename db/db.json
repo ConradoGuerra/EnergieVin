@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "name": "Domaine du Haut Bourg Sauvignon",
+      "property": {
+        "origin": "Valleé de la Loire",
+        "color": "blanc",
+        "year": 2022
+      },
+      "price": 5.3,
+      "website": "www.hautbourgsauvignon.com"
+    },
+    {
+      "name": "Pascal Bouchard - Le Classique Chablis",
+      "property": {
+        "origin": "Bourgogne",
+        "color": "blanc",
+        "year": 2020
+      },
+      "price": 12.99,
+      "website": "www.pascalbouchard.com"
+    },
+    {
+      "name": "Baron La rosé Merlot",
+      "property": {
+        "origin": "Bordelais",
+        "color": "rouge",
+        "year": 2022
+      },
+      "price": 4.8,
+      "website": "www.baronlarosemerlot.com"
+    },
+    {
+      "name": "Château Brillette Moulis en Médoc",
+      "property": {
+        "origin": "Bordelais",
+        "color": "rouge",
+        "year": 2017
+      },
+      "price": 7.9,
+      "website": "www.chateaubrillette.com"
+    },
+    {
+      "name": "Eléphant Rosé Luberon",
+      "property": {
+        "origin": "Vallée du Rhône",
+        "color": "rosé",
+        "year": 2020
+      },
+      "price": 5.18,
+      "website": "www.elephantrose.com"
+    },
+    {
+      "name": "Berne Grande Récolte",
+      "property": {
+        "origin": "Provence",
+        "color": "rosé",
+        "year": 2022
+      },
+      "price": 12.2,
+      "website": "www.bernegranderecolte.com"
+    }
+  ]
+}

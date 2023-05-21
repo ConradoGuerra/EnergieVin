@@ -1,5 +1,6 @@
 export default interface CreateWineDTO {
-  id?: string;
+  id?: number;
+  name: string;
   website: string;
   date: Date;
 }

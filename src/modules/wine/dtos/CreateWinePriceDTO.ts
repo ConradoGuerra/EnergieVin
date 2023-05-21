@@ -1,6 +1,6 @@
 export default interface CreateWinePriceDTO {
-  id?: string;
-  wineId: string;
+  id?: number;
+  wineId: number;
   price: number;
   date?: Date;
 }
