@@ -29,5 +29,14 @@ export default interface IWinesRepository {
   findLastPrices(
     firstPrice: number,
     lastPrice: number
-  ): Promise<{ wineId: number; max: string }[]>;
+  ): Promise<
+    {
+      wines_id: number;
+      wines_name: string;
+      wines_website: string;
+      wines_date: string;
+      wineId: number;
+      max: string;
+    }[]
+  >;
 }

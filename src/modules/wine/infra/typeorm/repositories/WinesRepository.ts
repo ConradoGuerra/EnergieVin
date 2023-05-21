@@ -99,16 +99,24 @@ export default class WinesRepository implements IWinesRepository {
   async findLastPrices(
     firstPrice = 0,
     lastPrice = 0
-  ): Promise<{ wineId: number; max: string }[]> {
-    const whereClause = lastPrice
-      ? `wp.price <= ${lastPrice} AND wp.price >= ${firstPrice}`
-      : "";
+  ): Promise<
+    {
+      wines_id: number;
+      wines_name: string;
+      wines_website: string;
+      wines_date: string;
+      wineId: number;
+      max: string;
+    }[]
+  > {
     return this.winePriceRepository
       .createQueryBuilder("wp")
       .select("wp.wineId, max(wp.price)")
-      .groupBy("wp.wineId")
+      .innerJoinAndSelect("wines", "wines", "wines.id = wp.wineId")
+      .groupBy("wp.wineId, wines.id")
       .orderBy("max", "DESC")
-      .where(whereClause)
+      .where(lastPrice ? `wp.price <= ${lastPrice}` : "")
+      .andWhere(firstPrice ? `wp.price >= ${firstPrice}` : `wp.price >= 0`)
       .getRawMany();
   }
 }
