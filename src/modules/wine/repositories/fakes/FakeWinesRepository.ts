@@ -72,4 +72,19 @@ export default class FakeWinesRepository implements IWinesRepository {
   async findByName(wineName: string): Promise<Wine[]> {
     return this.wines.filter(wine => wine.name === wineName);
   }
+
+  findWineById(wineId: number): Promise<
+    {
+      wine_id: number;
+      wine_name: string;
+      wine_website: string;
+      wine_date: Date;
+      wineProperty_id: number;
+      wineProperty_name: string;
+      wineProperty_value: string;
+      wineProperty_wineId: number;
+    }[]
+  > {
+    throw new Error("Method not implemented.");
+  }
 }
