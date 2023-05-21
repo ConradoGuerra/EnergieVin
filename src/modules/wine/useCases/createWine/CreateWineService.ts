@@ -33,7 +33,7 @@ export default class CreateWineService {
       const winePrice = await this.winesRepository.createWinePrice({
         wineId: hasWine.id,
         price: request.price,
-        date: hasWine.date,
+        date: request.date || new Date(),
       });
 
       return { wine: hasWine, winePrice };
@@ -42,7 +42,7 @@ export default class CreateWineService {
     const wine = await this.winesRepository.createWine({
       name: request.name,
       website: request.website,
-      date: request.date,
+      date: request.date || new Date(),
     });
 
     const winePrice = await this.winesRepository.createWinePrice({

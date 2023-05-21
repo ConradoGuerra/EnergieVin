@@ -21,7 +21,7 @@ export default class BulkCreateWineService {
         const winePrice = await this.winesRepository.createWinePrice({
           wineId: hasWine.id,
           price: wine.price,
-          date: wine.date,
+          date: wine.date || new Date(),
         });
 
         wines.push({ wine: hasWine, winePrice });
@@ -31,7 +31,7 @@ export default class BulkCreateWineService {
       const wineCreated = await this.winesRepository.createWine({
         name: wine.name,
         website: wine.website,
-        date: wine.date,
+        date: wine.date || new Date(),
       });
 
       const winePrice = await this.winesRepository.createWinePrice({
