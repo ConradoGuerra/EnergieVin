@@ -41,10 +41,6 @@ export default class EvaluationsRepository implements IEvaluationsRepository {
 
   async averageEvaluation(): Promise<
     {
-      wines_id: number;
-      wines_name: string;
-      wines_website: string;
-      wines_date: string;
       avg: string;
       wineId: number;
     }[]
@@ -52,8 +48,7 @@ export default class EvaluationsRepository implements IEvaluationsRepository {
     const hasEvaluation = await this.evaluationRepository
       .createQueryBuilder("evaluation")
       .select("AVG(evaluation.grade), evaluation.wineId")
-      .innerJoinAndSelect("wines", "wines", "wines.id = evaluation.wineId")
-      .groupBy("wines.id, evaluation.wineId")
+      .groupBy("evaluation.wineId")
       .getRawMany();
 
     return hasEvaluation;

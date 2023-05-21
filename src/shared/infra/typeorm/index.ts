@@ -16,5 +16,5 @@ export const AppDataSource = new DataSource({
   entities: [Wine, WinePrice, WineProperty, User, Evaluation],
   migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
   synchronize: true,
-  logging: true,
+  logging: false,
 });

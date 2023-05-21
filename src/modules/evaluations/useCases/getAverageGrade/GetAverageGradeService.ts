@@ -19,7 +19,7 @@ export default class GetAverageGradeService {
       wineId: number;
       name: string;
       website: string;
-      averageGrade: number;
+      averageGrade: number | null;
       date: string;
       price: number;
     }>
@@ -32,13 +32,20 @@ export default class GetAverageGradeService {
       lastPrice
     );
 
-    return averageWinesGrades.map(wine => ({
-      wineId: wine.wineId,
-      name: wine.wines_name,
-      website: wine.wines_website,
-      averageGrade: +wine.avg,
-      date: wine.wines_date,
-      price: +winePrices.find(price => wine.wineId === price.wineId).max,
-    }));
+    return winePrices
+      .map(wine => {
+        const hasAverage = averageWinesGrades.find(
+          average => average.wineId === wine.wineId
+        );
+        return {
+          wineId: wine.wineId,
+          name: wine.wines_name,
+          website: wine.wines_website,
+          averageGrade: hasAverage ? +hasAverage.avg : null,
+          date: wine.wines_date,
+          price: +wine.max,
+        };
+      })
+      .sort((A, B) => B.averageGrade - A.averageGrade);
   }
 }
