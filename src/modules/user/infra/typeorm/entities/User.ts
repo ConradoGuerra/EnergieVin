@@ -10,4 +10,7 @@ export default class User {
 
   @Column()
   specialist: boolean;
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  createdAt: Date;
 }
