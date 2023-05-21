@@ -12,7 +12,7 @@ const getWineController = new GetWineController();
 const wines = Router();
 wines.get("/", getWinesController.handle);
 wines.get("/:wineId", getWineController.handle);
-wines.get("/bulk-create", bulkCreateWinesController.handle);
+wines.post("/bulk-create", bulkCreateWinesController.handle);
 wines.get("/prices/:wineId", getWinePricesController.handle);
 
 export default wines;
