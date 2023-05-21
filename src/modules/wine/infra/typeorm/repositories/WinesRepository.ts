@@ -95,4 +95,20 @@ export default class WinesRepository implements IWinesRepository {
   async findByName(wineName: string): Promise<Wine[]> {
     return this.wineRepository.find({ where: { name: wineName } });
   }
+
+  async findLastPrices(
+    firstPrice = 0,
+    lastPrice = 0
+  ): Promise<{ wineId: number; max: string }[]> {
+    const whereClause = lastPrice
+      ? `wp.price <= ${lastPrice} AND wp.price >= ${firstPrice}`
+      : "";
+    return this.winePriceRepository
+      .createQueryBuilder("wp")
+      .select("wp.wineId, max(wp.price)")
+      .groupBy("wp.wineId")
+      .orderBy("max", "DESC")
+      .where(whereClause)
+      .getRawMany();
+  }
 }
