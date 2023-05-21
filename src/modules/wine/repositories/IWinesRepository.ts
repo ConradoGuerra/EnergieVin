@@ -14,5 +14,5 @@ export default interface IWinesRepository {
   ): Promise<WineProperty[]>;
   findAllWines(): Promise<Wine[]>;
   findWinePricesById(wineId: string): Promise<WinePrice[]>;
-  findByProperties(winePropertyDTO: WinePropertyDTO): Promise<Wine>;
+  findByName(wineName: string): Promise<Wine[]>;
 }

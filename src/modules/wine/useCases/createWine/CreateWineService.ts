@@ -4,14 +4,15 @@ import WineProperty from "@modules/wine/infra/typeorm/entities/WineProperty";
 import IWinesRepository from "@modules/wine/repositories/IWinesRepository";
 
 interface IRequest {
+  name: string;
   property: {
-    name: string;
     origin: string;
     color: string;
     year: number;
   };
   price: number;
   website: string;
+  date: Date;
 }
 
 export default class CreateWineService {
@@ -22,9 +23,7 @@ export default class CreateWineService {
     winePrice: WinePrice;
     wineProperties?: WineProperty[];
   }> {
-    const hasWine = await this.winesRepository.findByProperties(
-      request.property
-    );
+    const [hasWine] = await this.winesRepository.findByName(request.name);
 
     if (hasWine) {
       const winePrice = await this.winesRepository.createWinePrice({
@@ -37,6 +36,7 @@ export default class CreateWineService {
     }
 
     const wine = await this.winesRepository.createWine({
+      name: request.name,
       website: request.website,
       date: new Date(),
     });

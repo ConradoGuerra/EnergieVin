@@ -70,14 +70,7 @@ export default class WinesRepository implements IWinesRepository {
     });
   }
 
-  async findByProperties(winePropertyDTO: WinePropertyDTO): Promise<Wine> {
-    const keys = Object.keys(winePropertyDTO);
-    const values = Object.values(winePropertyDTO);
-    return this.wineRepository
-      .createQueryBuilder("wines")
-      .innerJoinAndSelect("wine_properties.wineId", "wine")
-      .where(`wine_properties.name in (${keys})`)
-      .andWhere(`wine_properties.value in (${values})`)
-      .getOne();
+  async findByName(wineName: string): Promise<Wine[]> {
+    return this.wineRepository.find({ where: { name: wineName } });
   }
 }

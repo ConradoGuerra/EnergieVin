@@ -69,19 +69,7 @@ export default class FakeWinesRepository implements IWinesRepository {
     return this.winePrices.filter(price => price.wineId.toString() === wineId);
   }
 
-  async findByProperties(winePropertyDTO: WinePropertyDTO): Promise<Wine> {
-    const [wineId] = this.wineProperties
-      .filter(item => {
-        const wineId = item.wineId;
-        return Object.entries(winePropertyDTO).every(([key, value]) => {
-          const matchingItem = this.wineProperties.find(
-            item => item.wineId === wineId && item.name === key
-          );
-          return matchingItem && matchingItem.value === value;
-        });
-      })
-      .map(item => item.wineId);
-
-    return this.wines.find(wine => wine.id === wineId.toString());
+  async findByName(wineName: string): Promise<Wine[]> {
+    return this.wines.filter(wine => wine.name === wineName);
   }
 }

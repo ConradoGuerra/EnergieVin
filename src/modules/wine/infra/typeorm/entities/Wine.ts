@@ -6,6 +6,9 @@ export default class Wine {
   id: string;
 
   @Column()
+  name: string;
+
+  @Column()
   website: string;
 
   @Column()
