@@ -8,8 +8,8 @@ import WinePrice from '@modules/wine/infra/typeorm/entities/WinePrice';
 
 export default class FakeWinesRepository implements IWinesRepository {
   findLastPrices(
-    firstPrice: number,
-    lastPrice: number,
+    _firstPrice: number,
+    _lastPrice: number,
   ): Promise<
     { wines_id: number; wines_name: string; wines_website: string; wines_date: string; wineId: number; max: string }[]
   > {
