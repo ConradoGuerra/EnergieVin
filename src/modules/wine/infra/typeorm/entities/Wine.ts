@@ -11,6 +11,6 @@ export default class Wine {
   @Column()
   website: string;
 
-  @Column()
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   date: Date;
 }
