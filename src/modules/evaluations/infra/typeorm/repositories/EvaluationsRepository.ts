@@ -38,4 +38,24 @@ export default class EvaluationsRepository implements IEvaluationsRepository {
     await this.evaluationRepository.save(evaluation);
     return evaluation;
   }
+
+  async averageEvaluation(): Promise<
+    {
+      wines_id: number;
+      wines_name: string;
+      wines_website: string;
+      wines_date: string;
+      avg: string;
+      wineId: number;
+    }[]
+  > {
+    const hasEvaluation = await this.evaluationRepository
+      .createQueryBuilder("evaluation")
+      .select("AVG(evaluation.grade), evaluation.wineId")
+      .innerJoinAndSelect("wines", "wines", "wines.id = evaluation.wineId")
+      .groupBy("wines.id, evaluation.wineId")
+      .getRawMany();
+
+    return hasEvaluation;
+  }
 }
