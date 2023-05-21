@@ -37,7 +37,7 @@ describe('BulkCreateWineService', () => {
     expect(data.wineCreated).toBeInstanceOf(Wine);
     expect(data.wineCreated).toEqual(
       expect.objectContaining({
-        id: '1',
+        id: 1,
         name: 'Domaine du Haut Bourg Sauvignon',
         date: new Date('2023-05-21 10:00:00'),
         website: 'www.hautbourgsauvignon.com',
@@ -49,29 +49,19 @@ describe('BulkCreateWineService', () => {
         date: new Date('2023-05-21 10:00:00'),
         id: '1',
         price: 5.3,
-        wineId: '1',
+        wineId: 1,
       }),
     );
     expect(data.wineProperties).toEqual(
       expect.arrayContaining([
-        {
-          id: '1',
-          wineId: '1',
-          name: 'origin',
-          value: 'Valleé de la Loire',
-        },
-        {
-          id: '2',
-          wineId: '1',
-          name: 'color',
-          value: 'blanc',
-        },
-        { id: '3', wineId: '1', name: 'year', value: 2022 },
+        { id: '1', name: 'origin', value: 'Valleé de la Loire', wineId: 1 },
+        { id: '2', name: 'color', value: 'blanc', wineId: 1 },
+        { id: '3', name: 'year', value: 2022, wineId: 1 },
       ]),
     );
   });
 
-  it('should create a second price if the wine\'s name be the same', async () => {
+  it('should create a second price if the wine`s name be the same', async () => {
     const winesData = [
       {
         property: {
@@ -97,9 +87,7 @@ describe('BulkCreateWineService', () => {
       },
     ];
 
-    jest
-      .spyOn(fakeWineDataApiProvider, 'getWinesData')
-      .mockImplementationOnce(async () => winesData);
+    jest.spyOn(fakeWineDataApiProvider, 'getWinesData').mockImplementationOnce(async () => winesData);
 
     const [result] = await bulkCreateWineService.execute();
 
@@ -110,7 +98,7 @@ describe('BulkCreateWineService', () => {
     expect(prices.length).toBe(2);
   });
 
-  it('should create a second wine if the wine\'s name it is not the same', async () => {
+  it('should create a second wine if the wine`s name it is not the same', async () => {
     const winesData = [
       {
         property: {
@@ -135,9 +123,7 @@ describe('BulkCreateWineService', () => {
         date: new Date('2023-05-22'),
       },
     ];
-    jest
-      .spyOn(fakeWineDataApiProvider, 'getWinesData')
-      .mockImplementationOnce(async () => winesData);
+    jest.spyOn(fakeWineDataApiProvider, 'getWinesData').mockImplementationOnce(async () => winesData);
 
     const [result] = await bulkCreateWineService.execute();
 

@@ -30,11 +30,11 @@ describe('CreateWineService', () => {
     expect(data.wine).toBeInstanceOf(Wine);
     expect(data.wine).toEqual(
       expect.objectContaining({
-        id: '1',
+        id: 1,
         name: 'Domaine du Haut Bourg Sauvignon',
         date: new Date('2023-05-21 10:00:00'),
         website: 'www.hautbourgsauvignon.com',
-      })
+      }),
     );
     expect(data.winePrice).toBeInstanceOf(WinePrice);
     expect(data.winePrice).toEqual(
@@ -42,29 +42,29 @@ describe('CreateWineService', () => {
         date: new Date('2023-05-21 10:00:00'),
         id: '1',
         price: 5.3,
-        wineId: '1',
-      })
+        wineId: 1,
+      }),
     );
     expect(data.wineProperties).toEqual(
       expect.arrayContaining([
         {
           id: '1',
-          wineId: '1',
+          wineId: 1,
           name: 'origin',
           value: 'Valleé de la Loire',
         },
         {
           id: '2',
-          wineId: '1',
+          wineId: 1,
           name: 'color',
           value: 'blanc',
         },
-        { id: '3', wineId: '1', name: 'year', value: 2022 },
-      ])
+        { id: '3', wineId: 1, name: 'year', value: 2022 },
+      ]),
     );
   });
 
-  it('should create a second price if the wine\'s properties be the same', async () => {
+  it('should create a second price if the wine`s properties be the same', async () => {
     const wine1 = {
       property: {
         origin: 'Valleé de la Loire',
