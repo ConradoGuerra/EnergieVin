@@ -1,4 +1,4 @@
-import { FindOptionsWhere, In, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { AppDataSource } from "@shared/infra/typeorm";
 import Wine from "../entities/Wine";
 import WinePrice from "../entities/WinePrice";
@@ -60,10 +60,19 @@ export default class WinesRepository implements IWinesRepository {
     return this.wineRepository.find();
   }
 
-  async findWinePricesById(wineId: number): Promise<WinePrice[]> {
-    return this.winePriceRepository.find({
-      where: { wineId: wineId },
+  async findWineById(wineId: number): Promise<Wine> {
+    return this.wineRepository.findOne({
+      where: { id: wineId },
     });
+  }
+
+  async findWinePricesById(id: number, limit = 0): Promise<WinePrice[]> {
+    return this.winePriceRepository
+      .createQueryBuilder("winePrices")
+      .where(`winePrices.wineId = ${id}`)
+      .orderBy("winePrices.date", "DESC")
+      .limit(limit)
+      .getMany();
   }
 
   async findByName(wineName: string): Promise<Wine[]> {
