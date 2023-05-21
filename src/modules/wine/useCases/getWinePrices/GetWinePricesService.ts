@@ -14,7 +14,13 @@ export default class GetWinePricesService {
     wineId: number,
     limit: number
   ): Promise<{
-    wine: Wine;
+    wine: {
+      wineId: number;
+      name: string;
+      webSite: string;
+      date: Date;
+      properties: any;
+    };
     prices: WinePrice[];
   }> {
     try {
@@ -23,8 +29,22 @@ export default class GetWinePricesService {
         wineId,
         limit
       );
-
-      return { wine, prices };
+      const wineReduced = wine.reduce(
+        (prev, curr) => {
+          return {
+            wineId: curr.wine_id,
+            name: curr.wine_name,
+            webSite: curr.wine_website,
+            date: curr.wine_date,
+            properties: {
+              ...prev.properties,
+              [curr.wineProperty_name]: curr.wineProperty_value,
+            },
+          };
+        },
+        { wineId, name: "", webSite: "", date: new Date(), properties: {} }
+      );
+      return { wine: wineReduced, prices };
     } catch (error) {
       console.log(error);
     }

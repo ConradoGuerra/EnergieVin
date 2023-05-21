@@ -60,10 +60,27 @@ export default class WinesRepository implements IWinesRepository {
     return this.wineRepository.find();
   }
 
-  async findWineById(wineId: number): Promise<Wine> {
-    return this.wineRepository.findOne({
-      where: { id: wineId },
-    });
+  async findWineById(wineId: number): Promise<
+    Array<{
+      wine_id: number;
+      wine_name: string;
+      wine_website: string;
+      wine_date: Date;
+      wineProperty_id: number;
+      wineProperty_name: string;
+      wineProperty_value: string;
+      wineProperty_wineId: number;
+    }>
+  > {
+    return this.wineRepository
+      .createQueryBuilder("wine")
+      .leftJoinAndSelect(
+        "wine_properties",
+        "wineProperty",
+        "wineProperty.wineId = wine.id"
+      )
+      .where(`wine.Id = ${wineId}`)
+      .getRawMany();
   }
 
   async findWinePricesById(id: number, limit = 0): Promise<WinePrice[]> {

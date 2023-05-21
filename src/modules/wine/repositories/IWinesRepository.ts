@@ -12,7 +12,18 @@ export default interface IWinesRepository {
     createWinePropertyDTO: CreateWinePropertyDTO
   ): Promise<WineProperty[]>;
   findAllWines(): Promise<Wine[]>;
-  findWineById(wineId: number): Promise<Wine>;
+  findWineById(wineId: number): Promise<
+    Array<{
+      wine_id: number;
+      wine_name: string;
+      wine_website: string;
+      wine_date: Date;
+      wineProperty_id: number;
+      wineProperty_name: string;
+      wineProperty_value: string;
+      wineProperty_wineId: number;
+    }>
+  >;
   findWinePricesById(wineId: number, limit: number): Promise<WinePrice[]>;
   findByName(wineName: string): Promise<Wine[]>;
 }
