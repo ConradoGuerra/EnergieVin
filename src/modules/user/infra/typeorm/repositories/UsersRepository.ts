@@ -16,4 +16,8 @@ export default class UsersRepository implements IUsersRepository {
     await this.userRepository.save(user);
     return user;
   }
+
+  async findById(id: number): Promise<User> {
+    return this.userRepository.findOneBy({ id });
+  }
 }
