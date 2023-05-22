@@ -12,7 +12,8 @@ Access to diagram: https://drive.google.com/file/d/123J4krTPCIIdB5sc_Qj2BOp7zi0P
 
 1. Run `npm install`
 2. Run `docker-compose up`
-3. Run `npm run dev:server`
+3. To create a json API server `npm run generateMockedData`
+4. Run `npm run dev:server`
 
 # Tests
 
