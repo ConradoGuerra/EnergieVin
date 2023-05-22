@@ -57,7 +57,7 @@ To create a wine the body request must be as it follows:
 
 To create more than one wine, the API conect to a externa source, the data must respect the following structure:
 
-`POST /wines`
+`POST /wines/bulk-create`
 
 ```JSON
 [{
